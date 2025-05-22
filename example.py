@@ -10,7 +10,7 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 speed = 200
-bug_speed = 500
+bug_speed = 100
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 1.5)
 bug_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 3.5)
 playerImg = pygame.image.load('assets/rocket.png')
@@ -19,7 +19,7 @@ bugImg = pygame.image.load('assets/bug.png')
 # player_y_pos = 400
 bug_movex = bug_pos.x
 bug_movey = bug_pos.y
-
+i = 0
 def player(xpos,ypos):
     screen.blit(playerImg,(xpos,ypos) )
 
@@ -57,25 +57,28 @@ while running:
    
     if bug_pos.y >bug_movey:
         bug_pos.y -= bug_speed * dt
-        bug_movey-=1
+        
     if bug_pos.y <bug_movey:
         bug_pos.y += bug_speed * dt
-        bug_movey-=1
+        
     if bug_pos.x >=bug_movex:
         bug_pos.x -= bug_speed * dt
-        bug_movex-=1
+        
     if bug_pos.x <bug_movex:
         bug_pos.x += bug_speed * dt
-        bug_movex-=1
+        
     
     if bug_movex<=0 or bug_movey<=0:
         bug_movex = random.randint(0,1200)
         bug_movey = random.randint(0,700)
+    else:
+        bug_movex-=1
+        bug_movey-=1
 
-    print(bug_movex,bug_movey)
-
-    
-    
+    if ((bug_movex>=(player_pos.x-140)) and (bug_movex <=(player_pos.x+140))) and ((bug_movey>=(player_pos.y-140)) and (bug_movey <=(player_pos.y+140))):
+        print(f'Hit!!{i}')
+        i+=1
+        
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -83,6 +86,6 @@ while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
-    dt = clock.tick(60) / 1000
+    dt = clock.tick(240) / 1000
 
 pygame.quit()
