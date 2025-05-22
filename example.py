@@ -10,7 +10,7 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 speed = 200
-bug_speed = 200
+bug_speed = 500
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 1.5)
 bug_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 3.5)
 playerImg = pygame.image.load('assets/rocket.png')
@@ -37,7 +37,7 @@ while running:
     screen.fill("purple")
 
     player(player_pos.x,player_pos.y)
-    #bug(bug_pos.x,bug_pos.y)
+    bug(bug_pos.x,bug_pos.y)
     #bug(xpos_bug,ypos_bug)
     #bug_movement()
 
@@ -55,16 +55,16 @@ while running:
         if player_pos.x <1220:
             player_pos.x += speed * dt 
    
-    if bug_pos.y >=0 and bug_pos.y >=bug_movey:
+    if bug_pos.y >bug_movey:
         bug_pos.y -= bug_speed * dt
         bug_movey-=1
-    else: #bug_pos.y <=620 and bug_pos.y <=bug_movey:
+    if bug_pos.y <bug_movey:
         bug_pos.y += bug_speed * dt
         bug_movey-=1
-    if bug_pos.x >=0 and bug_pos.x >=bug_movex:
+    if bug_pos.x >=bug_movex:
         bug_pos.x -= bug_speed * dt
         bug_movex-=1
-    else: #bug_pos.x <=1220 and bug_pos.x <=bug_movex:
+    if bug_pos.x <bug_movex:
         bug_pos.x += bug_speed * dt
         bug_movex-=1
     
