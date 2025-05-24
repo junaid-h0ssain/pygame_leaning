@@ -10,7 +10,7 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 speed = 1000
-bug_speed = 200
+bug_speed = 500
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 1.5)
 bug_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 3.5)
 playerImg = pygame.image.load('assets/rocket.png')
@@ -27,15 +27,21 @@ def bug(xpos,ypos,ranmin):
     screen.blit(bugImg,(xpos,ypos) )
     global bug_movex
     global bug_movey
-    if bug_pos.x !=bug_movex and bug_pos.y != bug_movey:
-        if bug_pos.x >=bug_movex:
-            bug_pos.x -= bug_speed * dt
-        else:
+    if bug_pos.x !=bug_movex:# and bug_pos.y != bug_movey:
+        if bug_pos.x <bug_movex and bug_pos.x<1280:
             bug_pos.x += bug_speed * dt
-        # if bug_pos.y >bug_movey:
-        #     bug_pos.y -= bug_speed * dt
-        # else:
-        #     bug_pos.y += bug_speed * dt
+        if bug_pos.x >bug_movex and bug_pos.x>0:
+            bug_pos.x -= bug_speed * dt
+    if bug_pos.x ==bug_movex:
+        bug_movex = random.randint(0,1280)-ranmin
+        bug_movey = random.randint(0,720)+ranmin
+        print(bug_movex,bug_movey)
+        bug_movex-=1
+        
+        if bug_pos.y >bug_movey:
+            bug_pos.y -= bug_speed * dt
+        else:
+            bug_pos.y += bug_speed * dt
 
     if bug_movex<=0 or bug_movey<=0:
         bug_movex = random.randint(0,1280)-ranmin
@@ -98,6 +104,6 @@ while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
-    dt = clock.tick(60) / 1000
+    dt = clock.tick(144) / 1000
 
 pygame.quit()
